@@ -54,6 +54,8 @@ SRC = libft/ft_atoi.c \
       libft/ft_putstr.c \
       libft/ft_putnbr.c \
       main.c\
+      errors.c\
+      checkers.c 
 
 OBJ = $(SRC:.c=.o)
 

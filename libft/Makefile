@@ -53,6 +53,7 @@ SRCS        :=      ft_lstadd_back.c \
                           ft_atoi.c \
                           ft_strlen.c \
                           ft_memmove.c \
+                          ft_strcpy.c 
                           
 OBJS        := $(SRCS:.c=.o)
 

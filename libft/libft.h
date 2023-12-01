@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 10:45:47 by vschneid          #+#    #+#             */
-/*   Updated: 2023/09/15 16:13:27 by vschneid         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:48:54 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*ft_strtrim(char *s1, char *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+char	*ft_strcpy(char *s1, char *s2);
 
 char	*get_next_line(int fd);
 char	*vs_buff_to_pot(int fd, char *pot_str);

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/24 14:51:38 by vschneid          #+#    #+#             */
-/*   Updated: 2023/12/01 18:47:41 by vschneid         ###   ########.fr       */
+/*   Created: 2023/12/01 17:48:07 by vschneid          #+#    #+#             */
+/*   Updated: 2023/12/01 17:48:29 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "libft.h"
 
-void arg_error(t_table *table)
+char	*ft_strcpy(char *s1, char *s2)
 {
-    (void)table;
-    perror(KRED"Error");
-    ft_putstr_fd("Wrong number of arguments!\n"KNRM, 2);
-    exit(1);
-}
+	int	i;
 
-void input_error(t_table *table)
-{
-    (void)table;
-    perror(KRED"Error");
-    ft_putstr_fd("Wrong input!\n"KNRM, 2);
-    exit(1);
+	i = 0;
+	while (s2[i] != '\0')
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+	s1[i] = '\0';
+	return (s1);
 }

@@ -19,15 +19,15 @@ int main(int argc, char **argv)
     if (argc < 5 || argc > 5)
         arg_error(NULL);
     input_check(argc, argv);
-    table.philo = ft_atoi(argv[1]);
-    table.starving = ft_atoi(argv[2]);
-    table.eating = ft_atoi(argv[3]);
-    table.sleeping = ft_atoi(argv[4]);
+    table.philosopher = ft_atoi(argv[1]);
+    table.time_to_die = ft_atoi(argv[2]);
+    table.time_to_eat = ft_atoi(argv[3]);
+    table.time_to_sleep = ft_atoi(argv[4]);
 
-    ft_printf("Number of philosophers: %d\n", table.philo);
-    ft_printf("Time to die: %d\n", table.starving);
-    ft_printf("Time to eat: %d\n", table.eating);
-    ft_printf("Time to sleep: %d\n", table.sleeping);
+    ft_printf("Number of philosophers: %d\n", table.philosopher);
+    ft_printf("Time to die: %d\n", table.time_to_die);
+    ft_printf("Time to eat: %d\n", table.time_to_eat);
+    ft_printf("Time to sleep: %d\n", table.time_to_sleep);
 
    return 0;
 }

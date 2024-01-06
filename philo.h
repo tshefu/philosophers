@@ -34,14 +34,34 @@
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
 
+/*
+	struct to save all the information from the input
+*/
 typedef struct s_table
 {
-	int		philo;
-	int		starving;
-	int		eating;
-	int		sleeping;
+	int		philosopher;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
 	char	**argv;
 }		t_table;
+
+/*
+	STRUCT FOR EACH PHILOSOPHER
+	id : unique identifier for philosopher
+	thread : thread associated with this philosopher
+	times_eaten : (optional) counter to track how many times the philosopher
+	has eaten
+	table : pointer to shared t_table structure. allows each philosopher to
+	access shared data 
+*/
+typedef struct s_philosopher
+{
+	int				id;
+	pthread_t		thread;
+	int				times_eaten;
+	struct s_table	*table;
+}	t_philosopher;
 
 // ERROR MESSAGES
 

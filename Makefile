@@ -53,10 +53,13 @@ SRC = libft/ft_atoi.c \
       libft/ft_putchar.c \
       libft/ft_putstr.c \
       libft/ft_putnbr.c \
-      libft/ft_strcpy.c\
-      main.c\
-      errors.c\
-      checkers.c 
+      libft/ft_strcpy.c \
+      main.c \
+      errors.c \
+      checkers.c \
+      initializing.c \
+      cleanup.c \
+      debugging_statements.c
 
 OBJ = $(SRC:.c=.o)
 

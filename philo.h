@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2023/12/01 18:46:55 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:52:38 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # define MAXINPUT 100
 
@@ -34,42 +35,39 @@
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
 
-/*
-	struct to save all the information from the input
-*/
-typedef struct s_table
-{
-	int		philosopher;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	char	**argv;
-}		t_table;
+typedef struct s_table {
+    pthread_mutex_t print_lock;  // Mutex for synchronizing output.
+    int num_philosophers;        // Total number of philosophers.
+    int time_to_die;             // Maximum time without eating before dying.
+    int time_to_eat;             // Time it takes for a philosopher to eat.
+    int time_to_sleep;           // Time a philosopher spends sleeping.
+    int some_philosopher_died;   // Flag to stop the simulation if a philosopher dies.
+    int min_meals;               // Minimum number of meals each philosopher must eat (optional).
+} t_table;
 
-/*
-	STRUCT FOR EACH PHILOSOPHER
-	id : unique identifier for philosopher
-	thread : thread associated with this philosopher
-	times_eaten : (optional) counter to track how many times the philosopher
-	has eaten
-	table : pointer to shared t_table structure. allows each philosopher to
-	access shared data 
-*/
-typedef struct s_philosopher
-{
-	int				id;
-	pthread_t		thread;
-	int				times_eaten;
-	struct s_table	*table;
-}	t_philosopher;
+// INITIALIZERS
+
+int     initialize_shared_table(t_table *table);
+void    set_the_table(t_table *table, int argc, char **argv);
 
 // ERROR MESSAGES
 
-void	input_error(t_table *table);
-void	arg_error(t_table *table);
+int     input_error();
+int     arg_error();
+int     malloc_error();
+int     init_error(t_table *table);
 
 // CHECKERS
 
-void    input_check(int argc, char **argv);
+bool    valid_input(int argc, char **argv);
+bool    no_philos_or_no_numbers(const char *input);
+
+// DEBUGGING
+
+void    print_table(t_table *table);
+
+// CLEANUP
+
+void    destroy_shared_table(t_table *table);
 
 #endif 

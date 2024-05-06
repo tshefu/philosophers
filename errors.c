@@ -6,24 +6,34 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:51:38 by vschneid          #+#    #+#             */
-/*   Updated: 2023/12/01 18:47:41 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:41:11 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void arg_error(t_table *table)
+int arg_error()
 {
-    (void)table;
-    perror(KRED"Error");
-    ft_putstr_fd("Wrong number of arguments!\n"KNRM, 2);
-    exit(1);
+    ft_putstr_fd(KRED"Wrong number of arguments!\n"KNRM, 2);
+    return 1;
 }
 
-void input_error(t_table *table)
+int input_error()
 {
-    (void)table;
-    perror(KRED"Error");
-    ft_putstr_fd("Wrong input!\n"KNRM, 2);
-    exit(1);
+    ft_putstr_fd(KRED"Wrong input!\n"KNRM, 2);
+    return 1;
+}
+
+int malloc_error()
+{
+    ft_putstr_fd(KRED"Failed to allocate memory!\n"KNRM, 2);
+    return 1;
+}
+
+int init_error(t_table *table)
+{
+    ft_putstr_fd(KRED"Failed to initialize shared data!\n"KNRM, 2);
+    destroy_shared_table(table);
+    free(table);
+    return 1;
 }

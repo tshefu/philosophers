@@ -6,30 +6,34 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:23:19 by vschneid          #+#    #+#             */
-/*   Updated: 2023/12/04 17:18:02 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:54:21 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-   t_table table;
+    t_table *table;
 
-    if (argc < 5 || argc > 5)
-        arg_error(NULL);
-    input_check(argc, argv);
-    table.philosopher = ft_atoi(argv[1]);
-    table.time_to_die = ft_atoi(argv[2]);
-    table.time_to_eat = ft_atoi(argv[3]);
-    table.time_to_sleep = ft_atoi(argv[4]);
+    if (argc < 5 || argc > 6)
+        return arg_error();
+    if (!valid_input(argc, argv))
+        return input_error();
+    table = ft_calloc(1, sizeof(t_table));
+    if (!table)
+        return malloc_error();
+    if (initialize_shared_table(table) != 0)
+        return init_error(table);
+    set_the_table(table, argc, argv);
+    print_table(table);
 
-    ft_printf("Number of philosophers: %d\n", table.philosopher);
-    ft_printf("Time to die: %d\n", table.time_to_die);
-    ft_printf("Time to eat: %d\n", table.time_to_eat);
-    ft_printf("Time to sleep: %d\n", table.time_to_sleep);
+    // Start your threads and simulation here
 
-   return 0;
+    destroy_shared_table(table);
+    free(table);
+    return 0;
 }
+
 
 

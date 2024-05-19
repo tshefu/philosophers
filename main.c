@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:23:19 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/06 00:54:21 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:33:36 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     set_the_table(table, argc, argv);
     print_table(table);
 
-    // Start your threads and simulation here
+    // TODO: Implement the rest of the program
 
     destroy_shared_table(table);
     free(table);

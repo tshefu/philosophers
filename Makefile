@@ -7,7 +7,9 @@ CYAN := \033[1;36m
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-NAME = philosophers
+PFLAG = -pthread
+DFLAG = -g
+NAME = philo
 RM = rm -rf
 
 SRC = libft/ft_atoi.c \
@@ -59,14 +61,15 @@ SRC = libft/ft_atoi.c \
       checkers.c \
       initializing.c \
       cleanup.c \
-      debugging_statements.c
+      debugging_statements.c \
+      routines.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) $(CFLAGS) -o $@
+	@$(CC) $(OBJ) $(CFLAGS) $(PFLAG) -o $@
 	@echo "$(GREEN)Philos ready to munch$(CLR_RMV)"
 
 clean:

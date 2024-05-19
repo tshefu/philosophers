@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/06 00:52:38 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/08 10:41:46 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@
 
 typedef struct s_table {
     pthread_mutex_t print_lock;  // Mutex for synchronizing output.
-    int num_philosophers;        // Total number of philosophers.
-    int time_to_die;             // Maximum time without eating before dying.
-    int time_to_eat;             // Time it takes for a philosopher to eat.
-    int time_to_sleep;           // Time a philosopher spends sleeping.
-    int some_philosopher_died;   // Flag to stop the simulation if a philosopher dies.
-    int min_meals;               // Minimum number of meals each philosopher must eat (optional).
+    int     num_philosophers;        // Total number of philosophers.
+    long    time_to_die;             // Maximum time without eating before dying.
+    long    time_to_eat;             // Time it takes for a philosopher to eat.
+    long    time_to_sleep;           // Time a philosopher spends sleeping.
+    long    some_philosopher_died;   // Flag to stop the simulation if a philosopher dies.
+    long    min_meals;               // Minimum number of meals each philosopher must eat (optional).
 } t_table;
 
 // INITIALIZERS

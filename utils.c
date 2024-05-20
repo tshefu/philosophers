@@ -6,15 +6,29 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 09:01:48 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 12:16:35 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:16:14 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long get_relative_time(long start_time)
+void ft_usleep(long microseconds)
 {
-    return get_time_in_ms() - start_time;
+    long start_time = get_time_in_ms();
+    long elapsed;
+    
+    while (1) {
+        elapsed = get_time_in_ms() - start_time;
+        if (elapsed * 1000 >= microseconds) {
+            break;
+        }
+        usleep(50);
+    }
+}
+
+long get_time(long start_time)
+{
+    return (get_time_in_ms() - start_time);
 }
 
 long get_time_in_ms(void)

@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 20:01:28 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:00:20 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void think(t_philo *philo)
 {
+    pthread_mutex_lock(&philo->table->print_lock);
     printf("%03ld %d is thinking\n", get_time(philo->table->start_time), philo->id);
+    pthread_mutex_unlock(&philo->table->print_lock);
 }
 
 void pick_forks_even(t_philo *philo)

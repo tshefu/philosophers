@@ -6,14 +6,12 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/08 10:41:46 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:20:18 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-
-# include "libft/libft.h"
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -21,6 +19,7 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <sys/time.h>
 
 # define MAXINPUT 100
 
@@ -35,20 +34,37 @@
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
 
+typedef struct s_table t_table;
+
+typedef struct s_philo {
+    t_table *table;
+    pthread_t thread;
+    int id;
+    long last_meal;
+    int meals;
+    pthread_mutex_t *print_lock;
+    pthread_mutex_t *left_fork;
+    pthread_mutex_t *right_fork;
+} t_philo;
+
 typedef struct s_table {
-    pthread_mutex_t print_lock;  // Mutex for synchronizing output.
-    int     num_philosophers;        // Total number of philosophers.
-    long    time_to_die;             // Maximum time without eating before dying.
-    long    time_to_eat;             // Time it takes for a philosopher to eat.
-    long    time_to_sleep;           // Time a philosopher spends sleeping.
-    long    some_philosopher_died;   // Flag to stop the simulation if a philosopher dies.
-    long    min_meals;               // Minimum number of meals each philosopher must eat (optional).
+    pthread_t *philo_threads;
+    pthread_mutex_t *forks;
+    t_philo *philo;
+    int num_philos;
+    long time_to_die;
+    long time_to_eat;
+    long time_to_sleep;
+    long some_philosopher_died;
+    long min_meals;
+    long start_time; // Add start time
+    pthread_mutex_t meals_lock; // Mutex to protect meal count
 } t_table;
 
 // INITIALIZERS
 
-int     initialize_shared_table(t_table *table);
-void    set_the_table(t_table *table, int argc, char **argv);
+int     init_table(t_table *table, int argc, char **argv);
+int     init_philosophers(t_table *table);
 
 // ERROR MESSAGES
 
@@ -68,6 +84,24 @@ void    print_table(t_table *table);
 
 // CLEANUP
 
-void    destroy_shared_table(t_table *table);
+void cleanup_table(t_table *table);
+
+// UTILS
+
+long    get_time_in_ms(void);
+long get_relative_time(long start_time);
+
+// FT_FUNCTIONS
+
+void	ft_putstr_fd(char const *s, int fd);
+int     ft_isdigit(int c);
+size_t  ft_strlen(const char *str);
+long    ft_atol(char *str);
+
+// ROUTINES
+
+int start_simulation(t_table *table);
+void *philosopher_routine(void *arg);
+void *monitor_routine(void *arg);
 
 #endif 

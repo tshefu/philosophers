@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 10:45:47 by vschneid          #+#    #+#             */
-/*   Updated: 2023/08/10 21:22:17 by vschneid         ###   ########.fr       */
+/*   Created: 2024/05/20 09:01:48 by vschneid          #+#    #+#             */
+/*   Updated: 2024/05/20 12:16:35 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-size_t	ft_strlen(const char *str)
+long get_relative_time(long start_time)
 {
-	int	len;
+    return get_time_in_ms() - start_time;
+}
 
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	return (len);
+long get_time_in_ms(void)
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }

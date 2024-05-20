@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:51:38 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/19 20:05:33 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:11:13 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int malloc_error()
 int init_error(t_table *table)
 {
     ft_putstr_fd(KRED"Failed to initialize shared table!\n"KNRM, 2);
-    destroy_shared_table(table);
+    cleanup_table(table);
     free(table);
     return 1;
 }

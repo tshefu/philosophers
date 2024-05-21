@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   times.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 09:01:48 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 19:16:14 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:33:04 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void ft_usleep(long microseconds)
 {
-    long start_time = get_time_in_ms();
+    long start_time;
     long elapsed;
     
-    while (1) {
+    start_time = get_time_in_ms();
+    while (1)
+    {
         elapsed = get_time_in_ms() - start_time;
-        if (elapsed * 1000 >= microseconds) {
+        if (elapsed >= microseconds)
             break;
-        }
         usleep(50);
     }
 }

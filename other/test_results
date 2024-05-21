@@ -1,0 +1,84 @@
+
+        199 610 200 200 10
+1       Fail    [x]     2502 161 died
+2       Pass    [✓]     3800 20 is eating
+3       Pass    [✓]     3800 49 is thinking
+4       Pass    [✓]     3801 118 is thinking
+5       Pass    [✓]     3801 117 is sleeping
+6       Pass    [✓]     3801 25 is thinking
+7       Pass    [✓]     3800 37 is thinking
+8       Pass    [✓]     3800 41 is sleeping
+9       Pass    [✓]     3800 19 is sleeping
+10      Fail    [x]     1502 29 died
+        80 % correct
+____________________________________________
+
+RESULT: passed: 28      failed: 2
+        93.3333 % correct
+
+Testing even numbers - one should die
+        3 599 200 200 10
+1       Fail    [x]     1000 1 is sleeping
+2       Fail    [x]     5601 2 is thinking
+3       Pass    [✓]     1000 3 died
+4       Pass    [✓]     1000 3 died
+5       Fail    [x]     1000 2 is sleeping
+6       Fail    [x]     5601 3 is thinking
+7       Pass    [✓]     1000 2 died
+8       Fail    [x]     1000 3 is sleeping
+9       Fail    [x]     1001 2 is sleeping
+10      Pass    [✓]     1001 2 died
+        40 % correct
+____________________________________________
+        31 599 200 200 10
+1       Fail    [x]     1000 29 is thinking
+2       Fail    [x]     2000 19 is sleeping
+3       Fail    [x]     1001 5 is sleeping
+4       Fail    [x]     1000 2 is sleeping
+5       Fail    [x]     1000 5 is sleeping
+6       Fail    [x]     1000 24 is eating
+7       Fail    [x]     1000 10 is thinking
+8       Fail    [x]     1000 14 is sleeping
+9       Fail    [x]     1000 4 is sleeping
+10      Fail    [x]     1001 31 has taken a fork
+        0 % correct
+____________________________________________
+        131 596 200 200 10
+1       Fail    [x]     1001 125 is thinking
+2       Fail    [x]     1001 72 is eating
+3       Fail    [x]     1001 108 is sleeping
+4       Fail    [x]     1001 54 is sleeping
+5       Fail    [x]     1001 89 is thinking
+6       Fail    [x]     1001 109 is sleeping
+7       Fail    [x]     1001 64 is sleeping
+8       Fail    [x]     1001 51 is sleeping
+9       Fail    [x]     1001 110 is sleeping
+10      Fail    [x]     1001 89 is sleeping
+        0 % correct
+
+Testing uneven numbers - one should die
+        4 310 200 100 10
+1       Pass    [✓]     1000 2 died
+2       Fail    [x]     1000 3 is sleeping
+3       Pass    [✓]     1000 2 died
+4       Pass    [✓]     1000 1 died
+5       Pass    [✓]     1000 2 died
+6       Fail    [x]     1000 1 is sleeping
+7       Pass    [✓]     1000 2 died
+8       Fail    [x]     1001 3 is sleeping
+9       Fail    [x]     1000 1 is sleeping
+10      Pass    [✓]     1000 2 died
+        60 % correct
+
+        198 610 200 200 10
+1       Pass    [✓]     3800 45 is thinking
+2       Pass    [✓]     3800 29 is thinking
+3       Pass    [✓]     3800 1 has taken a fork
+4       Pass    [✓]     3801 89 is sleeping
+5       Fail    [x]     1501 53 died
+6       Pass    [✓]     3801 30 is thinking
+7       Pass    [✓]     3800 47 has taken a fork
+8       Pass    [✓]     3800 18 is thinking
+9       Pass    [✓]     3801 131 is sleeping
+10      Pass    [✓]     3800 43 is thinking
+        90 % correct

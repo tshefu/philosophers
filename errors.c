@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:51:38 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 17:29:06 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:06:45 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int print_mutex_error(t_table *table)
 {
     int i = 0;
 
-    while (i < table->num_philos) {
+    while (i < table->num_philos)
+    {
         pthread_mutex_destroy(&table->forks[i]);
         i++;
     }

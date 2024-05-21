@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 21:00:20 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:17:36 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,29 @@
 
 void think(t_philo *philo)
 {
-    pthread_mutex_lock(&philo->table->print_lock);
-    printf("%03ld %d is thinking\n", get_time(philo->table->start_time), philo->id);
-    pthread_mutex_unlock(&philo->table->print_lock);
+    print_output(philo, "is thinking");
 }
 
 void pick_forks_even(t_philo *philo)
 {
-    while (pthread_mutex_trylock(philo->right_fork) != 0)
+    while (pthread_mutex_lock(philo->right_fork) != 0)
     {
-            if (philo->table->some_philosopher_died)
-                return;
-            ft_usleep(1000);
+        if (philo->table->some_philosopher_died)
+            return;
+        //ft_usleep(1000);
     }
     if (philo->table->some_philosopher_died) {
         pthread_mutex_unlock(philo->right_fork);
         return;
     }
-    pthread_mutex_lock(&philo->table->print_lock);
-    printf("%03ld %d has taken a fork\n", get_time(philo->table->start_time), philo->id);
-    pthread_mutex_unlock(&philo->table->print_lock);
-
-    while (pthread_mutex_trylock(philo->left_fork) != 0)
+    print_output(philo, "has taken a fork");
+    while (pthread_mutex_lock(philo->left_fork) != 0)
     {
         if (philo->table->some_philosopher_died) {
             pthread_mutex_unlock(philo->right_fork);
             return;
         }
-        ft_usleep(1000);
+        //ft_usleep(1000);
     }
     if (philo->table->some_philosopher_died)
     {
@@ -49,35 +44,31 @@ void pick_forks_even(t_philo *philo)
         pthread_mutex_unlock(philo->right_fork);
         return;
     }
-    pthread_mutex_lock(&philo->table->print_lock);
-    printf("%03ld %d has taken a fork\n", get_time(philo->table->start_time), philo->id);
-    pthread_mutex_unlock(&philo->table->print_lock);
+    print_output(philo, "has taken a fork");
 }
 
 void pick_up_forks_odd(t_philo *philo)
 {
-    while (pthread_mutex_trylock(philo->left_fork) != 0)
+    while (pthread_mutex_lock(philo->left_fork) != 0)
     {
         if (philo->table->some_philosopher_died)
             return;
-        ft_usleep(1000);
+        //ft_usleep(1000);
     }
     if (philo->table->some_philosopher_died)
     {
         pthread_mutex_unlock(philo->left_fork);
             return;
     }
-    pthread_mutex_lock(&philo->table->print_lock);
-    printf("%03ld %d has taken a fork\n", get_time(philo->table->start_time), philo->id);
-    pthread_mutex_unlock(&philo->table->print_lock);
-    while (pthread_mutex_trylock(philo->right_fork) != 0)
+    print_output(philo, "has taken a fork");
+    while (pthread_mutex_lock(philo->right_fork) != 0)
     {
         if (philo->table->some_philosopher_died)
         {
             pthread_mutex_unlock(philo->left_fork);
-            return;
+            return ;
         }
-        ft_usleep(1000);
+        //ft_usleep(1000);
     }
     if (philo->table->some_philosopher_died)
     {
@@ -85,9 +76,7 @@ void pick_up_forks_odd(t_philo *philo)
         pthread_mutex_unlock(philo->left_fork);
         return;
     }
-    pthread_mutex_lock(&philo->table->print_lock);
-    printf("%03ld %d has taken a fork\n", get_time(philo->table->start_time), philo->id);
-    pthread_mutex_unlock(&philo->table->print_lock);
+    print_output(philo, "has taken a fork");
 }
 
 void pick_up_forks(t_philo *philo)
@@ -103,18 +92,15 @@ void munch(t_philo *philo)
     int i;
 
     i = 0;
-    pthread_mutex_lock(&philo->table->print_lock);
-    printf("%03ld %d is eating\n", get_time(philo->table->start_time), philo->id);
-    pthread_mutex_unlock(&philo->table->print_lock);
-
+    print_output(philo, "is eating");
     philo->last_meal = get_time_in_ms();
-    while (i < philo->table->time_to_eat * 1000)
-    {
+    //while (i < philo->table->time_to_eat * 1000)
+    //{
         if (philo->table->some_philosopher_died)
             return ;
-        ft_usleep(1000);
-        i += 1000;
-    }
+        ft_usleep(philo->table->time_to_eat);
+        //i += 1000;
+    //}
     philo->meals++;
 }
 
@@ -130,19 +116,15 @@ void sleepytime(t_philo *philo)
     int i;
 
     i = 0;
-    pthread_mutex_lock(&philo->table->print_lock);
-    printf("%03ld %d is sleeping\n", get_time(philo->table->start_time), philo->id);
-    pthread_mutex_unlock(&philo->table->print_lock);
-
-    while (i < philo->table->time_to_sleep * 1000)
-    {
+    print_output(philo, "is sleeping");
+    //while (i < philo->table->time_to_sleep)
+    //{
         if (philo->table->some_philosopher_died)
             return ;
-        ft_usleep(1000);
-        i += 1000;
-    }
+        ft_usleep(philo->table->time_to_sleep);
+        //i += 1000;
+    //}
 }
-
 
 void *philosopher_routine(void *arg)
 {
@@ -153,6 +135,7 @@ void *philosopher_routine(void *arg)
     {
         if (table->some_philosopher_died)
             break;
+        usleep(100);
         pick_up_forks(philo);
         if (table->some_philosopher_died)
         {
@@ -179,15 +162,6 @@ void *philosopher_routine(void *arg)
     return NULL;
 }
 
-/**
- * Monitors the philosophers and checks if any of them have exceeded the time to die.
- * If a philosopher has exceeded the time to die, it prints a death message and sets
- * the flag `some_philosopher_died` to 1.
- * This function is meant to be run in a separate thread.
- *
- * @param arg A pointer to the `t_table` struct representing the dining table.
- * @return NULL
- */
 void *monitor_routine(void *arg)
 {
     t_table *table = (t_table *)arg;
@@ -198,33 +172,36 @@ void *monitor_routine(void *arg)
             long time_since_last_meal = get_time_in_ms() - table->philo[i].last_meal;
             if (time_since_last_meal > table->time_to_die)
             {
-                pthread_mutex_lock(&table->print_lock);
-                printf("%03ld %d died\n", get_time(table->start_time), table->philo[i].id);
-                pthread_mutex_unlock(&table->print_lock);
+                print_output(&table->philo[i], "died");
                 table->some_philosopher_died = 1;
                 return NULL;
             }
         }
-        ft_usleep(500);
+        ft_usleep(5);
     }
     return NULL;
 }
 
-/**
- * Executes the routine for a single philosopher.
- *
- * @param table The table containing the philosophers.
- */
+void *you_single_you_die(void *arg)
+{
+    t_philo *philo;
+    t_table *table;
+
+    philo = (t_philo *)arg;
+    table = philo->table;
+    pthread_mutex_lock(philo->left_fork);
+    print_output(philo, "has taken a fork");
+    ft_usleep(table->time_to_die);
+    print_output(philo, "died");
+    pthread_mutex_unlock(philo->left_fork);
+    return NULL;
+}
+
 void single_philosopher_routine(t_table *table)
 {
     t_philo *philo;
-
+    
     philo = &table->philo[0];
-    ft_usleep(table->time_to_die * 1000);
-    pthread_mutex_lock(&table->print_lock);
-    printf("%03ld %d died\n", get_time(table->start_time), philo->id);
-    pthread_mutex_unlock(&table->print_lock);
+    pthread_create(&philo->thread, NULL, you_single_you_die, philo);
+    pthread_join(philo->thread, NULL);
 }
-
-
-

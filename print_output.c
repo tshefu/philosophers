@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   print_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/05 23:31:26 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/21 18:06:36 by vschneid         ###   ########.fr       */
+/*   Created: 2024/05/21 16:23:44 by vschneid          #+#    #+#             */
+/*   Updated: 2024/05/21 20:22:55 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void cleanup_table(t_table *table)
+void print_output(t_philo *philo, char *str)
 {
-    int i;
-
-    i = 0;
-    while (i < table->num_philos)
-    {
-        pthread_mutex_destroy(&table->forks[i]);
-        i++;
-    }
-    pthread_mutex_destroy(&table->meals_lock);
-    free(table->forks);
-    free(table->philo_threads);
-    free(table->philo);
+    // TODO: still need to print philo died message
+    if (philo->table->some_philosopher_died)
+        return;
+    pthread_mutex_lock(&philo->table->print_lock);
+    printf("%03ld %d %s\n", get_time(philo->table->start_time), philo->id, str);
+    pthread_mutex_unlock(&philo->table->print_lock);
 }

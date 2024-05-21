@@ -19,8 +19,9 @@ SRC = main.c \
       cleanup.c \
       debugging_statements.c \
       routines.c \
-      utils.c \
-      ft_functions.c
+      times.c \
+      ft_functions.c \
+      print_output.c
 
 OBJ = $(SRC:.c=.o)
 

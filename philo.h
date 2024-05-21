@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 19:12:34 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:04:45 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ bool    no_philos_or_no_numbers(const char *input);
 // DEBUGGING
 
 void    print_table(t_table *table);
+void    print_output(t_philo *philo, char *str);
 
 // CLEANUP
 
@@ -109,5 +110,6 @@ int start_simulation(t_table *table);
 void *philosopher_routine(void *arg);
 void *monitor_routine(void *arg);
 void single_philosopher_routine(t_table *table);
+void *you_single_you_die(void *arg);
 
 #endif 

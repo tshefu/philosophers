@@ -6,41 +6,43 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:23:19 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 19:26:11 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:09:33 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int start_simulation(t_table *table) {
+int start_simulation(t_table *table)
+{
     pthread_t monitor_thread;
+    int i;
 
+    i = 0;
     monitor_thread = 0;
-    for (int i = 0; i < table->num_philos; i++) {
-        if (pthread_create(&table->philo[i].thread, NULL, philosopher_routine, &table->philo[i]) != 0) {
+    while (i < table->num_philos)
+    {
+        if (pthread_create(&table->philo[i].thread, NULL, philosopher_routine,\
+            &table->philo[i]) != 0) {
             table->some_philosopher_died = 1;
             break;
         }
+        i++;
     }
-
-    if (!table->some_philosopher_died) {
-        if (pthread_create(&monitor_thread, NULL, monitor_routine, table) != 0) {
+    if (!table->some_philosopher_died)
+    {
+        if (pthread_create(&monitor_thread, NULL, monitor_routine, table) != 0)
             table->some_philosopher_died = 1;
-        }
     }
-
-    if (monitor_thread != 0) {
+    if (monitor_thread != 0)
         pthread_join(monitor_thread, NULL);
-    }
-
-    for (int i = 0; i < table->num_philos; i++) {
+    i = 0;
+    while (i < table->num_philos)
+    {
         pthread_join(table->philo[i].thread, NULL);
+        i++;
     }
-
     return 0;
 }
-
-
 
 int main(int argc, char *argv[])
 {
@@ -67,6 +69,3 @@ int main(int argc, char *argv[])
     free(table);
     return (0);
 }
-
-
-

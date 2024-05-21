@@ -6,19 +6,11 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:28:45 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 17:11:21 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:07:33 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/**
- * Allocates memory for the philosopher threads, forks, and philosopher structures.
- * 
- * @param table The table structure containing the number of philosophers and
- * other data.
- * @return 0 if memory allocation is successful, 1 otherwise.
- */
 
 int malloc_table(t_table *table)
 {
@@ -35,16 +27,6 @@ int malloc_table(t_table *table)
     }
     return (0);
 }
-
-/**
- * Converts command line arguments to integers and initializes the table struct.
- * 
- * @param table The table struct to be initialized.
- * @param argc The number of command line arguments.
- * @param argv The array of command line arguments.
- * @return Returns 1 if there was an error in converting arguments or initializing
- * the table, 0 otherwise.
- */
 
 int atol_numbers(t_table *table, int argc, char **argv)
 {
@@ -63,15 +45,6 @@ int atol_numbers(t_table *table, int argc, char **argv)
         return (1);
     return (0);
 }
-
-/**
- * Initializes the table with the given arguments.
- * 
- * @param table The table to be initialized.
- * @param argc The number of command line arguments.
- * @param argv The array of command line arguments.
- * @return 0 if the table is successfully initialized, 1 otherwise.
- */
 
 int init_table(t_table *table, int argc, char **argv)
 {
@@ -96,14 +69,6 @@ int init_table(t_table *table, int argc, char **argv)
     return (0);
 }
 
-
-/**
- * Initializes the philosophers in the table.
- * 
- * @param table The table containing the philosophers.
- * @return 0 if successful, -1 otherwise.
- */
-
 int init_philosophers(t_table *table)
 {
     int i;
@@ -116,7 +81,7 @@ int init_philosophers(t_table *table)
         table->philo[i].last_meal = get_time_in_ms();
         table->philo[i].meals = 0;
         table->philo[i].left_fork = &table->forks[i];
-        table->philo[i].right_fork = &table->forks[(i + 1) % table->num_philos]; // This will work even for one philosopher
+        table->philo[i].right_fork = &table->forks[(i + 1) % table->num_philos];
         i++;
     }
     return 0;

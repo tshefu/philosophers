@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/22 14:50:18 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 00:00:57 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <stdint.h>
 
 # define MAXINPUT 100
 
@@ -44,6 +45,7 @@ typedef struct s_philo {
     int meals;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
+    pthread_mutex_t data_lock;
 } t_philo;
 
 typedef struct s_table {
@@ -57,25 +59,34 @@ typedef struct s_table {
     long some_philosopher_died;
     long min_meals;
     long start_time;
+    bool init_failed;
+    int mutexes;
     pthread_mutex_t meals_lock;
     pthread_mutex_t print_lock;
+    pthread_mutex_t death_lock; 
 } t_table;
 
 // INITIALIZERS
 
 int     init_table(t_table *table, int argc, char **argv);
 int     init_philosophers(t_table *table);
+int     start_dinnertime(t_table *table);
+int     join_threads_normal_mode(t_table *table, int i);
 
 // ERROR HANDLING
 
 int     input_error();
 int     arg_error();
-int     malloc_error();
+int     calloc_error();
 int     init_error(t_table *table);
 int     simulation_error(t_table *table);
 int     forks_mutex_error(t_table *table, int i);
 int     meals_mutex_error(t_table *table);
 int     print_mutex_error(t_table *table);
+int     thread_create_error(t_table *table, int i, int j);
+int     monitor_thread_error(t_table *table, int j);
+int     data_mutex_error(t_table *table);
+int     death_mutex_error(t_table *table);
 
 // CHECKERS
 
@@ -89,9 +100,9 @@ void    print_output(t_philo *philo, char *str);
 
 // CLEANUP
 
-void cleanup_table(t_table *table);
+void    cleanup_table(t_table *table);
 
-// UTILS
+// TIMING
 
 long    get_time_in_ms(void);
 long    get_time(long start_time);
@@ -104,13 +115,17 @@ int     ft_isdigit(int c);
 size_t  ft_strlen(const char *str);
 long    ft_atol(char *str);
 int     ft_strcmp(const char *s1, const char *s2);
+void	*ft_calloc(size_t num_elements, size_t element_size);
+void	*ft_memset(void *s, int c, size_t n);
 
 // ROUTINES
 
-int start_simulation(t_table *table);
-void *philosopher_routine(void *arg);
-void *monitor_routine(void *arg);
-void single_philosopher_routine(t_table *table);
-void *you_single_you_die(void *arg);
+void    *philosopher_routine_main(void *arg);
+void    *monitor_routine(void *arg);
+void    single_philosopher_routine_main(t_table *table);
+void    *you_single_you_die(void *arg);
+void    put_down_forks(t_philo *philo, int *right_locked, int *left_locked);
+void    pick_up_forks_even(t_philo *philo, int *right_locked, int *left_locked);
+void    pick_up_forks_odd(t_philo *philo, int *right_locked, int *left_locked);
 
 #endif 

@@ -8,7 +8,7 @@ CYAN := \033[1;36m
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 PFLAG = -pthread
-DFLAG = -g
+DFLAG = -fsanitize=thread -g
 NAME = philo
 RM = rm -rf
 
@@ -21,7 +21,10 @@ SRC = main.c \
       routines.c \
       times.c \
       ft_functions.c \
-      print_output.c
+      print_output.c \
+      single_philo.c \
+      monitoring.c \
+      forks.c
 
 OBJ = $(SRC:.c=.o)
 

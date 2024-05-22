@@ -6,17 +6,17 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:28:45 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/21 18:07:33 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:49:52 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int malloc_table(t_table *table)
+int calloc_table(t_table *table)
 {
-    table->philo_threads = malloc(table->num_philos * sizeof(pthread_t));
-    table->forks = malloc(table->num_philos * sizeof(pthread_mutex_t));
-    table->philo = malloc(table->num_philos * sizeof(t_philo));
+    table->philo_threads = ft_calloc(table->num_philos, sizeof(pthread_t));
+    table->forks = ft_calloc(table->num_philos, sizeof(pthread_mutex_t));
+    table->philo = ft_calloc(table->num_philos, sizeof(t_philo));
 
     if (!table->philo_threads || !table->forks || !table->philo)
     {
@@ -27,6 +27,7 @@ int malloc_table(t_table *table)
     }
     return (0);
 }
+
 
 int atol_numbers(t_table *table, int argc, char **argv)
 {
@@ -52,22 +53,27 @@ int init_table(t_table *table, int argc, char **argv)
 
     if (atol_numbers(table, argc, argv) != 0)
         return 1;
-    if (malloc_table(table) != 0)
+    if (calloc_table(table) != 0)
         return 1;
     i = 0;
     while (i < table->num_philos)
     {
         if (pthread_mutex_init(&table->forks[i], NULL) != 0)
-            return (forks_mutex_error(table, i));
+            return forks_mutex_error(table, i);
+        if (pthread_mutex_init(&table->philo[i].data_lock, NULL) != 0)
+            return data_mutex_error(table);
         i++;
     }
-    i = 0;
     if (pthread_mutex_init(&table->meals_lock, NULL) != 0)
-        return (meals_mutex_error(table));
+        return meals_mutex_error(table);
     if (pthread_mutex_init(&table->print_lock, NULL) != 0)
-        return (print_mutex_error(table));
-    return (0);
+        return print_mutex_error(table);
+    if (pthread_mutex_init(&table->death_lock, NULL) != 0)
+        return death_mutex_error(table);
+
+    return 0;
 }
+
 
 int init_philosophers(t_table *table)
 {

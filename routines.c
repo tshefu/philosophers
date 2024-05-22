@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/21 20:17:36 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:57:39 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ void pick_forks_even(t_philo *philo)
     {
         if (philo->table->some_philosopher_died)
             return;
-        //ft_usleep(1000);
     }
-    if (philo->table->some_philosopher_died) {
+    if (philo->table->some_philosopher_died)
+    {
         pthread_mutex_unlock(philo->right_fork);
         return;
     }
     print_output(philo, "has taken a fork");
     while (pthread_mutex_lock(philo->left_fork) != 0)
     {
-        if (philo->table->some_philosopher_died) {
+        if (philo->table->some_philosopher_died)
+        {
             pthread_mutex_unlock(philo->right_fork);
             return;
         }
-        //ft_usleep(1000);
     }
     if (philo->table->some_philosopher_died)
     {
@@ -53,7 +53,6 @@ void pick_up_forks_odd(t_philo *philo)
     {
         if (philo->table->some_philosopher_died)
             return;
-        //ft_usleep(1000);
     }
     if (philo->table->some_philosopher_died)
     {
@@ -68,7 +67,6 @@ void pick_up_forks_odd(t_philo *philo)
             pthread_mutex_unlock(philo->left_fork);
             return ;
         }
-        //ft_usleep(1000);
     }
     if (philo->table->some_philosopher_died)
     {
@@ -94,13 +92,9 @@ void munch(t_philo *philo)
     i = 0;
     print_output(philo, "is eating");
     philo->last_meal = get_time_in_ms();
-    //while (i < philo->table->time_to_eat * 1000)
-    //{
         if (philo->table->some_philosopher_died)
             return ;
         ft_usleep(philo->table->time_to_eat);
-        //i += 1000;
-    //}
     philo->meals++;
 }
 
@@ -117,13 +111,9 @@ void sleepytime(t_philo *philo)
 
     i = 0;
     print_output(philo, "is sleeping");
-    //while (i < philo->table->time_to_sleep)
-    //{
         if (philo->table->some_philosopher_died)
             return ;
         ft_usleep(philo->table->time_to_sleep);
-        //i += 1000;
-    //}
 }
 
 void *philosopher_routine(void *arg)

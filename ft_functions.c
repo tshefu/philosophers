@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 10:42:48 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 11:32:42 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:50:03 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,14 @@ long ft_atol(char *str)
     if (result <= -2147483649 || result >= 2147483648)
         return (-1);
     return (result * sign);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*(const unsigned char *)s1 - *(const unsigned char *)s2);
 }

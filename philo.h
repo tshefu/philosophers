@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/21 18:04:45 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:50:18 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	ft_putstr_fd(char const *s, int fd);
 int     ft_isdigit(int c);
 size_t  ft_strlen(const char *str);
 long    ft_atol(char *str);
+int     ft_strcmp(const char *s1, const char *s2);
 
 // ROUTINES
 

@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 19:58:52 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:25:32 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void    cleanup_table(t_table *table);
 
 long    get_time_in_ms(void);
 long    get_time(long start_time);
-int    ft_usleep(long duration, t_philo *philo);
+void    ft_usleep(long duration, t_philo *philo);
+
 
 // FT_FUNCTIONS
 
@@ -125,13 +126,15 @@ void	*ft_memset(void *s, int c, size_t n);
 void    *philosopher_routine_main(void *arg);
 void    single_philosopher_routine_main(t_table *table);
 void    *you_single_you_die(void *arg);
-void    put_down_forks(t_philo *philo, int *right_locked, int *left_locked);
-void    pick_up_forks_even(t_philo *philo, int *right_locked, int *left_locked);
-void    pick_up_forks_odd(t_philo *philo, int *right_locked, int *left_locked);
+void    put_down_forks(t_philo *philo);
+void    pick_up_forks_even(t_philo *philo);
+void    pick_up_forks_odd(t_philo *philo);
 
 // MONITORS
 
-void    *monitor_death(void *arg);
-void    *monitor_meals(void *arg);
+int death_lock(t_table *table);
+
+int did_philo_die(t_philo *philo); 
+int oh_no_someone_dead(t_table *table); 
 
 #endif 

@@ -6,13 +6,13 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 23:56:59 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 02:05:34 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:58:04 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *monitor_routine(void *arg)
+void *monitor_death(void *arg)
 {
     long time_since_last_meal;
     t_table *table;
@@ -45,6 +45,35 @@ void *monitor_routine(void *arg)
             break;
         }
         pthread_mutex_unlock(&table->death_lock);
+        ft_usleep(5);
+    }
+    return NULL;
+}
+
+void *monitor_meals(void *arg)
+{
+    t_table *table;
+    int all_full;
+    
+    table = (t_table *)arg;
+    while (1)
+    {
+        all_full = 1;
+        for (int i = 0; i < table->num_philos; i++)
+        {
+            pthread_mutex_lock(&table->meals_lock);
+            if (table->philo[i].meals < table->min_meals)
+                all_full = 0;
+            pthread_mutex_unlock(&table->meals_lock);
+        }
+        if (all_full)
+        {
+            pthread_mutex_lock(&table->death_lock);
+            table->all_full = 1;
+            //table->some_philosopher_died = 1;
+            pthread_mutex_unlock(&table->death_lock);
+            break;
+        }
         ft_usleep(5);
     }
     return NULL;

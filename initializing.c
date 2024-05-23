@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:28:45 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/22 23:49:52 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:30:57 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ int atol_numbers(t_table *table, int argc, char **argv)
     table->time_to_sleep = ft_atol(argv[4]);
     table->some_philosopher_died = 0;
     if (argc == 6)
+    {
         table->min_meals = atol(argv[5]);
+        // change: kleiner gleich 0
+        if(table->min_meals <= 0)
+            return (1); 
+    }
     else
         table->min_meals = -1;
     if (table->num_philos == -1 || table->time_to_die == -1
-        || table->time_to_eat == -1 || table->time_to_sleep == -1
-        || (argc == 6 && table->min_meals == -1))
+        || table->time_to_eat == -1 || table->time_to_sleep == -1)
+        //|| (argc == 6 && table->min_meals == -1))
         return (1);
     return (0);
 }
@@ -60,16 +65,16 @@ int init_table(t_table *table, int argc, char **argv)
     {
         if (pthread_mutex_init(&table->forks[i], NULL) != 0)
             return forks_mutex_error(table, i);
-        if (pthread_mutex_init(&table->philo[i].data_lock, NULL) != 0)
-            return data_mutex_error(table);
+        // if (pthread_mutex_init(&table->philo[i].data_lock, NULL) != 0)
+        //     return data_mutex_error(table);
         i++;
     }
-    if (pthread_mutex_init(&table->meals_lock, NULL) != 0)
-        return meals_mutex_error(table);
+    // if (pthread_mutex_init(&table->meals_lock, NULL) != 0)
+    //     return meals_mutex_error(table);
     if (pthread_mutex_init(&table->print_lock, NULL) != 0)
         return print_mutex_error(table);
-    if (pthread_mutex_init(&table->death_lock, NULL) != 0)
-        return death_mutex_error(table);
+    // if (pthread_mutex_init(&table->death_lock, NULL) != 0)
+    //     return death_mutex_error(table);
 
     return 0;
 }

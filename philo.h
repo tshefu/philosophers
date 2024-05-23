@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 00:00:57 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:55:47 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philo {
     int id;
     long last_meal;
     int meals;
+    int is_full;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     pthread_mutex_t data_lock;
@@ -61,6 +62,7 @@ typedef struct s_table {
     long start_time;
     bool init_failed;
     int mutexes;
+    int all_full;
     pthread_mutex_t meals_lock;
     pthread_mutex_t print_lock;
     pthread_mutex_t death_lock; 
@@ -121,11 +123,15 @@ void	*ft_memset(void *s, int c, size_t n);
 // ROUTINES
 
 void    *philosopher_routine_main(void *arg);
-void    *monitor_routine(void *arg);
 void    single_philosopher_routine_main(t_table *table);
 void    *you_single_you_die(void *arg);
 void    put_down_forks(t_philo *philo, int *right_locked, int *left_locked);
 void    pick_up_forks_even(t_philo *philo, int *right_locked, int *left_locked);
 void    pick_up_forks_odd(t_philo *philo, int *right_locked, int *left_locked);
+
+// MONITORS
+
+void    *monitor_death(void *arg);
+void    *monitor_meals(void *arg);
 
 #endif 

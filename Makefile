@@ -34,10 +34,6 @@ $(NAME): $(OBJ)
 	@$(CC) $(OBJ) $(CFLAGS) $(PFLAG) -o $@
 	@echo "$(GREEN)Philos ready to munch$(CLR_RMV)"
 
-fsanitize: $(OBJ)
-	@$(CC) $(OBJ) $(CFLAGS) ($DFLAG) $(PFLAG) -o $@
-	@echo "$(GREEN)Philos ready to munch with fsanitize$(CLR_RMV)"
-
 clean:
 	@$(RM) $(OBJ)
 	@echo "$(RED)Removing object files$(CLR_RMV)"

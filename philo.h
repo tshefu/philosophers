@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 21:25:32 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/24 00:38:48 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,13 @@ int     death_mutex_error(t_table *table);
 bool    valid_input(int argc, char **argv);
 bool    no_philos_or_no_numbers(const char *input);
 
+// MONITORS
+
+int death_lock(t_table *table);
+
+int did_philo_die(t_philo *philo); 
+int oh_no_someone_dead(t_table *table); 
+
 // DEBUGGING
 
 void    print_table(t_table *table);
@@ -107,7 +114,7 @@ void    cleanup_table(t_table *table);
 // TIMING
 
 long    get_time_in_ms(void);
-long    get_time(long start_time);
+//long    get_time(long start_time);
 void    ft_usleep(long duration, t_philo *philo);
 
 
@@ -130,11 +137,7 @@ void    put_down_forks(t_philo *philo);
 void    pick_up_forks_even(t_philo *philo);
 void    pick_up_forks_odd(t_philo *philo);
 
-// MONITORS
+int all_philos_full(t_table *table); 
 
-int death_lock(t_table *table);
-
-int did_philo_die(t_philo *philo); 
-int oh_no_someone_dead(t_table *table); 
 
 #endif 

@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 02:08:29 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:52:16 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,12 @@ void think(t_philo *philo)
 
 void munch(t_philo *philo)
 {
-    pthread_mutex_lock(&philo->data_lock);
     if (philo->table->some_philosopher_died)
-    {
-        pthread_mutex_unlock(&philo->data_lock);
-        return ;
-    }
+            return ;
     print_output(philo, "is eating");
     philo->last_meal = get_time_in_ms();
         ft_usleep(philo->table->time_to_eat);
     philo->meals++;
-    pthread_mutex_unlock(&philo->data_lock);
 }
 
 void sleepytime(t_philo *philo)
@@ -38,14 +33,6 @@ void sleepytime(t_philo *philo)
         return ;
     print_output(philo, "is sleeping");
         ft_usleep(philo->table->time_to_sleep);
-}
-
-void pick_forks_main(t_philo *philo, int *right_locked, int *left_locked)
-{
-    if (philo->id % 2 == 0)
-        pick_up_forks_even(philo, &right_locked, &left_locked);
-    else
-        pick_up_forks_odd(philo, &right_locked, &left_locked);
 }
 
 void *philosopher_routine_main(void *arg)
@@ -65,7 +52,17 @@ void *philosopher_routine_main(void *arg)
         }
         pthread_mutex_unlock(&table->death_lock);
         usleep(100);
-        pick_forks_main(philo, &right_locked, &left_locked);
+        if (philo->id % 2 == 0)
+        {
+            ft_usleep(4);
+            pick_up_forks_even(philo, &right_locked, &left_locked);
+        }
+        else
+        {
+            
+            ft_usleep(2);
+            pick_up_forks_odd(philo, &right_locked, &left_locked);
+        }
         pthread_mutex_lock(&table->death_lock);
         if (table->some_philosopher_died)
         {
@@ -74,8 +71,13 @@ void *philosopher_routine_main(void *arg)
             break;
         }
         pthread_mutex_unlock(&table->death_lock);
+
+        pthread_mutex_lock(&philo->data_lock);
         munch(philo);
+        pthread_mutex_unlock(&philo->data_lock);
+
         put_down_forks(philo, &right_locked, &left_locked);
+
         pthread_mutex_lock(&table->death_lock);
         if (table->some_philosopher_died)
         {
@@ -83,7 +85,9 @@ void *philosopher_routine_main(void *arg)
             break;
         }
         pthread_mutex_unlock(&table->death_lock);
+
         sleepytime(philo);
+
         pthread_mutex_lock(&table->death_lock);
         if (table->some_philosopher_died)
         {
@@ -91,6 +95,7 @@ void *philosopher_routine_main(void *arg)
             break;
         }
         pthread_mutex_unlock(&table->death_lock);
+
         think(philo);
     }
     put_down_forks(philo, &right_locked, &left_locked);

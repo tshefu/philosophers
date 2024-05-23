@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 01:18:49 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 08:14:19 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void *philosopher_routine_main(void *arg)
         usleep(100);
         if (philo->id % 2 == 0)
         {
+            ft_usleep(4);
             pick_up_forks_even(philo, &right_locked, &left_locked);
         }
         else

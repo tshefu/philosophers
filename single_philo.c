@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 23:56:05 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/22 23:56:25 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:01:36 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void *you_single_you_die(void *arg)
     table = philo->table;
     pthread_mutex_lock(philo->left_fork);
     print_output(philo, "has taken a fork");
-    ft_usleep(table->time_to_die);
+    ft_usleep(table->time_to_die, philo);
     print_output(philo, "died");
     pthread_mutex_unlock(philo->left_fork);
     return NULL;

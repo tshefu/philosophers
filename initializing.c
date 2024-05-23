@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:28:45 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 14:30:57 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:48:27 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int atol_numbers(t_table *table, int argc, char **argv)
     table->time_to_die = ft_atol(argv[2]);
     table->time_to_eat = ft_atol(argv[3]);
     table->time_to_sleep = ft_atol(argv[4]);
-    table->some_philosopher_died = 0;
+    table->some_philosopher_died = false;
     if (argc == 6)
     {
         table->min_meals = atol(argv[5]);

@@ -6,13 +6,13 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 09:01:48 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/22 22:05:06 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:04:16 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void ft_usleep(long microseconds)
+void ft_usleep(long time_to_eat, t_philo *philo)
 {
     long start_time;
     long elapsed;
@@ -21,8 +21,14 @@ void ft_usleep(long microseconds)
     while (1)
     {
         elapsed = get_time_in_ms() - start_time;
-        if (elapsed >= microseconds)
+        if (elapsed >= time_to_eat)
             break;
+        if (philo->last_meal > philo->table->time_to_die)
+        {
+            pthread_mutex_lock(&philo->table->death_lock);
+            philo->table->some_philosopher_died = 1;
+            pthread_mutex_unlock(&philo->table->death_lock);
+        }
         usleep(50);
     }
 }

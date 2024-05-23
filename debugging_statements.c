@@ -6,13 +6,13 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 00:17:15 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/20 17:29:06 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:00:50 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void print_table(t_table *table)
+/* void print_table(t_table *table)
 {
     printf("Table Information:\n");
     printf("Number of Philosophers: %d\n", table->num_philos);
@@ -32,4 +32,4 @@ void print_table(t_table *table)
         printf("Right Fork: %p\n", (void *)philo->right_fork);
     }
     printf("\n");
-}
+} */

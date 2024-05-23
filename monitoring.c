@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 23:56:59 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 13:58:04 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:08:58 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void *monitor_death(void *arg)
             break;
         }
         pthread_mutex_unlock(&table->death_lock);
-        ft_usleep(5);
+        ft_usleep(5, table->philo);
     }
     return NULL;
 }
 
-void *monitor_meals(void *arg)
+/* void *monitor_meals(void *arg)
 {
     t_table *table;
     int all_full;
@@ -74,7 +74,7 @@ void *monitor_meals(void *arg)
             pthread_mutex_unlock(&table->death_lock);
             break;
         }
-        ft_usleep(5);
+        ft_usleep(5, table->philo);
     }
     return NULL;
-}
+} */

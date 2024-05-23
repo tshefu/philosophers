@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 00:00:57 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 01:18:49 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,15 @@ void *philosopher_routine_main(void *arg)
         pthread_mutex_unlock(&table->death_lock);
         usleep(100);
         if (philo->id % 2 == 0)
+        {
             pick_up_forks_even(philo, &right_locked, &left_locked);
+        }
         else
+        {
+            
+            ft_usleep(2);
             pick_up_forks_odd(philo, &right_locked, &left_locked);
+        }
         pthread_mutex_lock(&table->death_lock);
         if (table->some_philosopher_died)
         {

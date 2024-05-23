@@ -6,13 +6,13 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 23:56:59 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 17:08:58 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:18:17 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *monitor_death(void *arg)
+/* void *monitor_death(void *arg)
 {
     long time_since_last_meal;
     t_table *table;
@@ -48,7 +48,7 @@ void *monitor_death(void *arg)
         ft_usleep(5, table->philo);
     }
     return NULL;
-}
+} */
 
 /* void *monitor_meals(void *arg)
 {

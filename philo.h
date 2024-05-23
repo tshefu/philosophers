@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 17:04:32 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:58:52 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void    cleanup_table(t_table *table);
 
 long    get_time_in_ms(void);
 long    get_time(long start_time);
-void    ft_usleep(long time_to_eat, t_philo *philo);
+int    ft_usleep(long duration, t_philo *philo);
 
 // FT_FUNCTIONS
 

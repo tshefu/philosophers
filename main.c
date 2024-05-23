@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:23:19 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 14:30:38 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:31:27 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,39 +25,23 @@ int join_threads_normal_mode(t_table *table, int i)
 
 int start_dinnertime(t_table *table)
 {
-    pthread_t monitor_thread;
-    pthread_t monitor_meals_thread;
     int i;
-    int j;
 
-    i = 0;
-    monitor_thread = 0;
-    monitor_meals_thread = 0;
     table->all_full = 0;
-    while (i < table->num_philos)
+    for (i = 0; i < table->num_philos; i++)
     {
         if (pthread_create(&table->philo[i].thread, NULL, philosopher_routine_main, &table->philo[i]) != 0)
         {
             table->init_failed = true;
             break;
         }
-        i++;
     }
-    j = 0;
     if (table->init_failed)
-        return thread_create_error(table, i, j);
-    // if (pthread_create(&monitor_thread, NULL, monitor_death, table) != 0)
-    //     return monitor_thread_error(table, j);
-    // if (pthread_create(&monitor_meals_thread, NULL, monitor_meals, table) != 0)
-    // {
-    //     perror("Failed to create meals monitor thread");
-    //     return 1;
-    // }
-    pthread_join(monitor_meals_thread, NULL);
-    pthread_join(monitor_thread, NULL);
-    i = 0;
-    return join_threads_normal_mode(table, i);
+        return thread_create_error(table, i, 0);
+    
+    return join_threads_normal_mode(table, 0);
 }
+
 
 
 int main(int argc, char *argv[])

@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 17:07:30 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:00:32 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 void think(t_philo *philo)
 {
     print_output(philo, "is thinking");
+    // Optional: Add a short random delay to simulate thinking time more realistically
+    if (ft_usleep(100, philo) == 1)
+    {
+        pthread_mutex_lock(&philo->table->death_lock);
+        philo->table->some_philosopher_died = 1;
+        pthread_mutex_unlock(&philo->table->death_lock);
+    }
 }
 
 
@@ -23,18 +30,48 @@ void munch(t_philo *philo)
     pthread_mutex_lock(&philo->table->meals_lock);
     philo->last_meal = get_time_in_ms();
     pthread_mutex_unlock(&philo->table->meals_lock);
+
     print_output(philo, "is eating");
-    ft_usleep(philo->table->time_to_eat, philo);
+    if (ft_usleep(philo->table->time_to_eat, philo) == 1)
+    {
+        pthread_mutex_lock(&philo->table->death_lock);
+        philo->table->some_philosopher_died = 1;
+        pthread_mutex_unlock(&philo->table->death_lock);
+    }
     pthread_mutex_lock(&philo->table->meals_lock);
     philo->meals++;
+    int all_full = 1;
+    for (int i = 0; i < philo->table->num_philos; i++)
+    {
+        if (philo->table->philo[i].meals < philo->table->min_meals)
+        {
+            all_full = 0;
+            break;
+        }
+    }
+    if (all_full)
+    {
+        pthread_mutex_lock(&philo->table->death_lock);
+        philo->table->all_full = 1;
+        pthread_mutex_unlock(&philo->table->death_lock);
+    }
     pthread_mutex_unlock(&philo->table->meals_lock);
 }
+
+
+
+
 
 
 void sleepytime(t_philo *philo)
 {
     print_output(philo, "is sleeping");
-    ft_usleep(philo->table->time_to_sleep, philo);
+    if (ft_usleep(philo->table->time_to_sleep, philo) == 1)
+    {
+        pthread_mutex_lock(&philo->table->death_lock);
+        philo->table->some_philosopher_died = 1;
+        pthread_mutex_unlock(&philo->table->death_lock);
+    }
 }
 
 int death_lock(t_table *table)
@@ -52,27 +89,50 @@ int death_lock(t_table *table)
 void *philosopher_routine_main(void *arg)
 {
     t_philo *philo = (t_philo *)arg;
+    t_table *table = philo->table;
     int right_locked = 0;
     int left_locked = 0;
 
-    while (!(death_lock(philo->table)))
+    while (1)
     {
+        if (death_lock(table))
+            break;
+
         if (philo->id % 2 == 0)
         {
-            //ft_usleep(4);
             pick_up_forks_even(philo, &right_locked, &left_locked);
         }
         else
         {
-            //ft_usleep(4);
             pick_up_forks_odd(philo, &right_locked, &left_locked);
         }
+
+        if (death_lock(table))
+        {
+            put_down_forks(philo, &right_locked, &left_locked);
+            break;
+        }
+
         munch(philo);
         put_down_forks(philo, &right_locked, &left_locked);
+
+        if (death_lock(table))
+            break;
+
         sleepytime(philo);
+
+        if (death_lock(table))
+            break;
+
         think(philo);
     }
+    put_down_forks(philo, &right_locked, &left_locked);
     return NULL;
 }
+
+
+
+
+
 
 

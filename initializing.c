@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 23:28:45 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 16:48:27 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:30:29 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,21 @@ int init_table(t_table *table, int argc, char **argv)
     {
         if (pthread_mutex_init(&table->forks[i], NULL) != 0)
             return forks_mutex_error(table, i);
-        // if (pthread_mutex_init(&table->philo[i].data_lock, NULL) != 0)
-        //     return data_mutex_error(table);
+        if (pthread_mutex_init(&table->philo[i].data_lock, NULL) != 0)
+            return data_mutex_error(table);
         i++;
     }
-    // if (pthread_mutex_init(&table->meals_lock, NULL) != 0)
-    //     return meals_mutex_error(table);
+    if (pthread_mutex_init(&table->meals_lock, NULL) != 0)
+        return meals_mutex_error(table);
     if (pthread_mutex_init(&table->print_lock, NULL) != 0)
         return print_mutex_error(table);
-    // if (pthread_mutex_init(&table->death_lock, NULL) != 0)
-    //     return death_mutex_error(table);
+    if (pthread_mutex_init(&table->death_lock, NULL) != 0)
+        return death_mutex_error(table);
 
     return 0;
 }
+
+
 
 
 int init_philosophers(t_table *table)

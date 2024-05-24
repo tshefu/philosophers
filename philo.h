@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/24 22:20:00 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:40:45 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	cleanup_table(t_table *table);
 
 long	get_time_in_ms(void);
 long	get_time(long start_time);
-void	ft_usleep(long microseconds);
+void	ft_usleep(long microseconds, t_table *table);
 
 // FT_FUNCTIONS
 
@@ -128,7 +128,9 @@ void	*you_single_you_die(void *arg);
 void	put_down_forks(t_philo *philo, int *right_locked, int *left_locked);
 void	pick_up_forks_even(t_philo *philo, int *right_locked, int *left_locked);
 void	pick_up_forks_odd(t_philo *philo, int *right_locked, int *left_locked);
-
+void	munch(t_philo *philo);
+void	sleepytime(t_philo *philo);
+void	think(t_philo *phi);
 void	*monitor_meals(void *arg);
 void	*monitor_death(void *arg);
 int		check_for_dead_philo(t_table *table, int *leftlocked, int *rightlocked);

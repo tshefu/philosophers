@@ -23,6 +23,7 @@ SRC = main.c \
       eatsleeprepeat.c \
       times.c \
       ft_functions.c \
+      ft_functions_two.c \
       print_output.c \
       single_philo.c \
       monitor_meals.c \

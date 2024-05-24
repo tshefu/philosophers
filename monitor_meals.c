@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 23:56:59 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/24 22:31:33 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:39:25 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	*monitor_meals(void *arg)
 			philos_satisfied(table);
 			break ;
 		}
-		ft_usleep(5);
+		ft_usleep(5, table);
 	}
 	return (NULL);
 }

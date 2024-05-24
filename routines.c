@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/24 22:30:08 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:39:32 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_for_dead_philo(t_table *table, int *left_locked, int *right_locked)
 void	even_sleep_pre_routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		ft_usleep(4);
+		ft_usleep(4, philo->table);
 }
 
 void	*philosopher_routine_main(void *arg)

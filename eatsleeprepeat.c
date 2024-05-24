@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:29:55 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/24 22:30:38 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:39:12 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	munch(t_philo *philo)
 	pthread_mutex_lock(&philo->data_lock);
 	philo->last_meal = get_time_in_ms();
 	pthread_mutex_unlock(&philo->data_lock);
-	ft_usleep(philo->table->eattime);
+	ft_usleep(philo->table->eattime, philo->table);
 	pthread_mutex_lock(&philo->table->meals_lock);
 	philo->meals++;
 	pthread_mutex_unlock(&philo->table->meals_lock);
@@ -50,5 +50,5 @@ void	sleepytime(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->table->death_lock);
 	print_output(philo, "is sleeping");
-	ft_usleep(philo->table->sleeptime);
+	ft_usleep(philo->table->sleeptime, philo->table);
 }

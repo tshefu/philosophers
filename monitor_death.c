@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:31:00 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/24 22:32:14 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:39:20 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*monitor_death(void *arg)
 			break ;
 		}
 		pthread_mutex_unlock(&table->death_lock);
-		ft_usleep(5);
+		ft_usleep(5, table);
 	}
 	return (NULL);
 }

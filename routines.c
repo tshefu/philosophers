@@ -6,107 +6,56 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:46:20 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/24 02:18:20 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/24 22:30:08 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void think(t_philo *philo)
+int	check_for_dead_philo(t_table *table, int *left_locked, int *right_locked)
 {
-    print_output(philo, "is thinking");
+	pthread_mutex_lock(&table->death_lock);
+	if (table->some_philosopher_died)
+	{
+		pthread_mutex_unlock(&table->death_lock);
+		put_down_forks(table->philo, right_locked, left_locked);
+		return (1);
+	}
+	pthread_mutex_unlock(&table->death_lock);
+	return (0);
 }
 
-void munch(t_philo *philo)
+void	even_sleep_pre_routine(t_philo *philo)
 {
-    if (philo->table->some_philosopher_died)
-        return;
-    print_output(philo, "is eating");
-    pthread_mutex_lock(&philo->data_lock);
-    philo->last_meal = get_time_in_ms();
-    pthread_mutex_unlock(&philo->data_lock);
-    ft_usleep(philo->table->time_to_eat);
-    pthread_mutex_lock(&philo->table->meals_lock);
-    philo->meals++;
-    pthread_mutex_unlock(&philo->table->meals_lock);
+	if (philo->id % 2 == 0)
+		ft_usleep(4);
 }
 
-
-void sleepytime(t_philo *philo)
+void	*philosopher_routine_main(void *arg)
 {
-    if (philo->table->some_philosopher_died)
-        return ;
-    print_output(philo, "is sleeping");
-        ft_usleep(philo->table->time_to_sleep);
+	t_philo	*philo;
+	t_table	*table;
+	int		right_locked;
+	int		left_locked;
+
+	philo = (t_philo *)arg;
+	table = philo->table;
+	right_locked = 0;
+	left_locked = 0;
+	even_sleep_pre_routine(philo);
+	while (1)
+	{
+		if (check_for_dead_philo(table, &right_locked, &left_locked))
+			break ;
+		if (philo->id % 2 == 0)
+			pick_up_forks_even(philo, &right_locked, &left_locked);
+		else
+			pick_up_forks_odd(philo, &right_locked, &left_locked);
+		munch(philo);
+		put_down_forks(philo, &right_locked, &left_locked);
+		sleepytime(philo);
+		think(philo);
+	}
+	put_down_forks(philo, &right_locked, &left_locked);
+	return (NULL);
 }
-
-void *philosopher_routine_main(void *arg)
-{
-    t_philo *philo = (t_philo *)arg;
-    t_table *table = philo->table;
-    int right_locked = 0;
-    int left_locked = 0;
-
-    while (1)
-    {
-        pthread_mutex_lock(&table->death_lock);
-        if (table->some_philosopher_died)
-        {
-            pthread_mutex_unlock(&table->death_lock);
-            break;
-        }
-        pthread_mutex_unlock(&table->death_lock);
-
-        if (philo->id % 2 == 0)
-        {
-            ft_usleep(4);
-            pick_up_forks_even(philo, &right_locked, &left_locked);
-        }
-        else
-        {
-            ft_usleep(2);
-            pick_up_forks_odd(philo, &right_locked, &left_locked);
-        }
-
-        pthread_mutex_lock(&table->death_lock);
-        if (table->some_philosopher_died)
-        {
-            pthread_mutex_unlock(&table->death_lock);
-            put_down_forks(philo, &right_locked, &left_locked);
-            break;
-        }
-        pthread_mutex_unlock(&table->death_lock);
-
-        munch(philo);
-
-        put_down_forks(philo, &right_locked, &left_locked);
-
-        pthread_mutex_lock(&table->death_lock);
-        if (table->some_philosopher_died)
-        {
-            pthread_mutex_unlock(&table->death_lock);
-            break;
-        }
-        pthread_mutex_unlock(&table->death_lock);
-
-        sleepytime(philo);
-
-        pthread_mutex_lock(&table->death_lock);
-        if (table->some_philosopher_died)
-        {
-            pthread_mutex_unlock(&table->death_lock);
-            break;
-        }
-        pthread_mutex_unlock(&table->death_lock);
-
-        think(philo);
-    }
-    put_down_forks(philo, &right_locked, &left_locked);
-    return NULL;
-}
-
-
-
-
-
-

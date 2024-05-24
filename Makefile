@@ -14,16 +14,19 @@ RM = rm -rf
 
 SRC = main.c \
       errors.c \
+      errors_two.c \
+      errors_three.c \
       checkers.c \
       initializing.c \
       cleanup.c \
-      debugging_statements.c \
       routines.c \
+      eatsleeprepeat.c \
       times.c \
       ft_functions.c \
       print_output.c \
       single_philo.c \
-      monitoring.c \
+      monitor_meals.c \
+      monitor_death.c \
       forks.c
 
 OBJ = $(SRC:.c=.o)

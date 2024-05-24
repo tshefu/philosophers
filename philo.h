@@ -6,7 +6,7 @@
 /*   By: vschneid <vschneid@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:25:10 by vschneid          #+#    #+#             */
-/*   Updated: 2024/05/23 00:00:57 by vschneid         ###   ########.fr       */
+/*   Updated: 2024/05/24 01:57:51 by vschneid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_table {
     long some_philosopher_died;
     long min_meals;
     long start_time;
+    int all_full;
     bool init_failed;
     int mutexes;
     pthread_mutex_t meals_lock;
@@ -121,11 +122,13 @@ void	*ft_memset(void *s, int c, size_t n);
 // ROUTINES
 
 void    *philosopher_routine_main(void *arg);
-void    *monitor_routine(void *arg);
 void    single_philosopher_routine_main(t_table *table);
 void    *you_single_you_die(void *arg);
 void    put_down_forks(t_philo *philo, int *right_locked, int *left_locked);
 void    pick_up_forks_even(t_philo *philo, int *right_locked, int *left_locked);
 void    pick_up_forks_odd(t_philo *philo, int *right_locked, int *left_locked);
 
+
+void    *monitor_meals(void *arg);
+void    *monitor_death(void *arg);
 #endif 
